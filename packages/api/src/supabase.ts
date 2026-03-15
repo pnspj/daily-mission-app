@@ -1,8 +1,12 @@
-import { createClient } from '@supabase/supabase-js'
+import { createBrowserClient } from '@supabase/ssr'
 
-let client: ReturnType<typeof createClient> | null = null
+let client: ReturnType<typeof createBrowserClient> | null = null
 
-/** ブラウザ用 Supabase クライアントのシングルトン */
+/**
+ * ブラウザ用 Supabase クライアントのシングルトン
+ * createBrowserClient を使うことでセッションが cookie に保存され、
+ * Next.js middleware (createServerClient) がセッションを認識できる
+ */
 export function getSupabaseClient() {
   if (!client) {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -12,7 +16,7 @@ export function getSupabaseClient() {
         'NEXT_PUBLIC_SUPABASE_URL と NEXT_PUBLIC_SUPABASE_ANON_KEY を設定してください',
       )
     }
-    client = createClient(url, key)
+    client = createBrowserClient(url, key)
   }
   return client
 }
