@@ -238,6 +238,11 @@ export function DailyCheckInScreen({ themeId, onBack }: DailyCheckInScreenProps)
   const theme = themes?.find((t) => t.id === themeId)
   const today = useMemo(() => todayLocalDate(), [])
 
+  // テーマが切り替わったら前テーマのレコードをリセット
+  useEffect(() => {
+    setTaskSetRecordsMap({})
+  }, [themeId])
+
   // タスクセットが読み込まれたら全て POST /task-set-records（冪等）
   useEffect(() => {
     if (!taskSets || taskSets.length === 0) return
@@ -270,11 +275,11 @@ export function DailyCheckInScreen({ themeId, onBack }: DailyCheckInScreenProps)
   }
 
   const totalTaskCount = Object.values(taskSetRecordsMap).reduce(
-    (sum, { taskRecords }) => sum + taskRecords.length,
+    (sum, { taskRecords }) => sum + (taskRecords ?? []).length,
     0,
   )
   const achievedCount = Object.values(taskSetRecordsMap).reduce(
-    (sum, { taskRecords }) => sum + taskRecords.filter((r) => r.achieved).length,
+    (sum, { taskRecords }) => sum + (taskRecords ?? []).filter((r) => r.achieved).length,
     0,
   )
 
