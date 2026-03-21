@@ -4,7 +4,6 @@ export { useAuthStore } from './store/authStore'
 
 // Auth screens
 export { LoginScreen } from './features/auth/LoginScreen'
-export { SignUpScreen } from './features/auth/SignUpScreen'
 
 // Theme screens
 export { ThemeListScreen } from './features/theme/ThemeListScreen'

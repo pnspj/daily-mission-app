@@ -2,7 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const AUTH_PATHS = ['/login', '/signup']
+const AUTH_PATHS = ['/login', '/auth/callback']
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request })
@@ -33,7 +33,8 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   const pathname = request.nextUrl.pathname
-  const isAuthPath = AUTH_PATHS.some((p) => pathname.startsWith(p))
+  const hasOAuthCode = request.nextUrl.searchParams.has('code')
+  const isAuthPath = AUTH_PATHS.some((p) => pathname.startsWith(p)) || hasOAuthCode
 
   // 未認証 → ログインページへリダイレクト
   if (!user && !isAuthPath) {
