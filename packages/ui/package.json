@@ -8,6 +8,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@daily-mission/api": "workspace:*",
     "react": "^18.3.0"
   },
   "devDependencies": {
