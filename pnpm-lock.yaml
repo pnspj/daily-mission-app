@@ -122,6 +122,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@daily-mission/api':
+        specifier: workspace:*
+        version: link:../api
       react:
         specifier: ^18.3.0
         version: 18.3.1
