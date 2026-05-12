@@ -11,7 +11,7 @@
     "@daily-mission/api": "workspace:*",
     "@daily-mission/ui": "workspace:*",
     "@supabase/supabase-js": "^2.45.0",
-    "@tanstack/react-query": "^5.56.0",
+    "@tanstack/react-query": "5.90.21",
     "react": "^18.3.0",
     "zustand": "^5.0.0"
   },
