@@ -1,7 +1,10 @@
 # CLAUDE.md
 
 設計方針は **[packages/api/src/types.ts](packages/api/src/types.ts)** および
-バックエンドリポジトリ `pnspj/daily-mission-api` の `docs/design-doc.md` を参照。
+バックエンドリポジトリ `pnspj/daily-mission-api` の `docs/01-mvp/01-design-doc.md` を参照。
+
+課題（開発項目）は GitHub Issues で管理する。運用手順（課題管理・CI失敗対応・定期メンテナンス）は
+バックエンドリポジトリの `docs/02-operations/` を参照。
 
 ## スタック
 
@@ -26,12 +29,21 @@ pnpm dev --filter web  # Web のみ
 # ビルド
 pnpm build
 
-# 型チェック
+# 型チェック（コミット前に必ず実行。next dev は型チェックしない）
 pnpm type-check
+pnpm --filter web tsc --noEmit  # web のみ
+
+# リント
+pnpm lint
+
+# 依存の脆弱性チェック（CI と同条件）
+pnpm audit --audit-level=critical
 
 # 依存インストール
 pnpm install
 ```
+
+テストは未整備（[Issue #17](https://github.com/pnspj/daily-mission-app/issues/17) で管理）。
 
 ## ローカル環境変数 (apps/web/.env.local)
 
